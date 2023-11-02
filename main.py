@@ -38,27 +38,27 @@ def main():
 
 def f_book(user_data):
     f_no = input("Enter the correct flight no:")
-    if f_no in list(flight_details['Flight_No']):
-            print("Seats Available are: ", list(flight_details[flight_details['Flight_No'] == f_no]['Seats_Available'])[0])
-            print("Flight starts from:", list(flight_details[flight_details['Flight_No'] == f_no]['From'])[0])
-            print("Flight's destination is:", list(flight_details[flight_details['Flight_No'] == f_no]['To'])[0])
-            print("It departs at time: ", list(flight_details[flight_details['Flight_No'] == f_no]['Departure'])[0])
-            print("The arrival time is:", list(flight_details[flight_details['Flight_No'] == f_no]['Arrival'])[0])
-            print("The flight will be live for:", list(flight_details[flight_details['Flight_No'] == f_no]['Duration'])[0])
-            print("The number of stops are:", list(flight_details[flight_details['Flight_No'] == f_no]['Stops'])[0])
-            print("Ticket per person:", list(flight_details[flight_details['Flight_No'] == f_no]['Price'])[0])
+    if f_no in flight_details['Flight_No']:
+            print("Seats Available are: ", flight_details[flight_details['Flight_No'] == f_no]['Seats_Available'])
+            print("Flight starts from:", flight_details[flight_details['Flight_No'] == f_no]['From'])
+            print("Flight's destination is:", flight_details[flight_details['Flight_No'] == f_no]['To'])
+            print("It departs at time: ", flight_details[flight_details['Flight_No'] == f_no]['Departure'])
+            print("The arrival time is:", flight_details[flight_details['Flight_No'] == f_no]['Arrival'])
+            print("The flight will be live for:", flight_details[flight_details['Flight_No'] == f_no]['Duration'])
+            print("The number of stops are:", flight_details[flight_details['Flight_No'] == f_no]['Stops'])
+            print("Ticket per person:", flight_details[flight_details['Flight_No'] == f_no]['Price'])
         
     else:
         print("Invalid flight number entered. Please try again.")
         return -1
     tickets = int(input("How many seats ticket you want to book?:"))
-    
 
-    print(f"You need to pay {tickets* int(str(list(flight_details[flight_details['Flight_No'] == f_no]['Price'])[0]).split('.')[1])}")
+    print(f"You need to pay {tickets* int(flight_details[flight_details['Flight_No'] == f_no]['Price'].split('.')[1])}")
     c = input("Do you want to confirm the booking?: (y/n)")
     if c == 'y':
         pnr = randint(100000, 999999)
         user_data = pd.concat([user_data, pd.DataFrame([{'PNR': pnr, 'Tickets': tickets }])])
+        print(user_data)
         user_data = user_data.to_csv(r'D:\Programming\IP_Project\user_data.csv')
         user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
         print("Your ticket has been booked successfully.")
@@ -162,7 +162,7 @@ Visakhapatnam (VTZ)
 
 def f_cancel(user_data):
     p = int(input("Enter your PNR number:"))
-    if p in list(user_data['PNR']):
+    if p in user_data:
         user_data[user_data['PNR'] == p]['Tickets'] = 0
         user_data = user_data.to_csv(r'D:\Programming\IP_Project\user_data.csv')
         user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
@@ -184,7 +184,6 @@ def f_sched():
 
 
 def user_flight(user_data):
-    user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
     u = input("Enter your email to confirm:")
     print(user_data[user_data['email'] == u])
 
@@ -260,6 +259,7 @@ def f_status():
     plt.show()
 
 def login(user_data):
+    print(user_data)
     username = input("Enter your email address:")
     if username in list(user_data['email']):
         pwd = input("Enter your password:")
@@ -277,8 +277,10 @@ def signup(user_data):
         email = input("Enter your email address:")
         password = input("Create a strong password for your account. It must contain at least 8 alphanumeric characters:")
         user_data = pd.concat([user_data, pd.DataFrame([{'name': name, 'dob': dob, 'email': email, 'password': password}])])
+        print(user_data)
         user_data = user_data.to_csv(r'D:\Programming\IP_Project\user_data.csv')
         user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
+        print(user_data)
         print("Account created successfully. You can login now.")
         login(user_data)
         
