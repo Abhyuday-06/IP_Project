@@ -7,7 +7,7 @@ import re
 import time
 from random import randint   
 
-flight_details = pd.read_csv(r"D:\Programming\IP_Project\flight_data.csv")
+flight_details = pd.read_csv(r".\flight_data.csv")
 user_details = pd.DataFrame({'S_No':[],'Passenger_Name':[], 'Flight_No':[],'PNR_No':[],'Departure':[],'Arrival':[]})
 
 def main():
@@ -59,8 +59,8 @@ def f_book(user_data):
     if c == 'y':
         pnr = randint(100000, 999999)
         user_data = pd.concat([user_data, pd.DataFrame([{'PNR': pnr, 'Tickets': tickets }])])
-        user_data = user_data.to_csv(r'D:\Programming\IP_Project\user_data.csv')
-        user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
+        user_data = user_data.to_csv(r'.\user_data.csv')
+        user_data = pd.read_csv(r'.\user_data.csv')
         print("Your ticket has been booked successfully.")
 
     else:
@@ -164,8 +164,8 @@ def f_cancel(user_data):
     p = int(input("Enter your PNR number:"))
     if p in list(user_data['PNR']):
         user_data[user_data['PNR'] == p]['Tickets'] = 0
-        user_data = user_data.to_csv(r'D:\Programming\IP_Project\user_data.csv')
-        user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
+        user_data = user_data.to_csv(r'.\user_data.csv')
+        user_data = pd.read_csv(r'.\user_data.csv')
         print("Your ticket has been cancelled successfully.")
          
 
@@ -184,7 +184,7 @@ def f_sched():
 
 
 def user_flight(user_data):
-    user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
+    user_data = pd.read_csv(r'.\user_data.csv')
     u = input("Enter your email to confirm:")
     print(user_data[user_data['email'] == u])
 
@@ -195,7 +195,7 @@ def convert24(time):
     return t.strftime('%H:%M')
 
 def f_status():
-    flight_data = pd.read_csv(r'D:\Programming\IP_Project\flight_data.csv')
+    flight_data = pd.read_csv(r'.\flight_data.csv')
     
     id = input("Enter Flight ID: ")
     
@@ -277,12 +277,12 @@ def signup(user_data):
         email = input("Enter your email address:")
         password = input("Create a strong password for your account. It must contain at least 8 alphanumeric characters:")
         user_data = pd.concat([user_data, pd.DataFrame([{'name': name, 'dob': dob, 'email': email, 'password': password}])])
-        user_data = user_data.to_csv(r'D:\Programming\IP_Project\user_data.csv')
-        user_data = pd.read_csv(r'D:\Programming\IP_Project\user_data.csv')
+        user_data = user_data.to_csv(r'.\user_data.csv')
+        user_data = pd.read_csv(r'.\user_data.csv')
         print("Account created successfully. You can login now.")
         login(user_data)
         
-user_data = pd.read_csv(r"D:\Programming\IP_Project\user_data.csv")
+user_data = pd.read_csv(r".\user_data.csv")
 i = int(input("Enter 1 to Login and enter 2 to Sign Up:"))
 if i == 1:  
         login(user_data)
